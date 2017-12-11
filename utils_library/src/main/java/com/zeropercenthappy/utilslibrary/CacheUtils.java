@@ -27,7 +27,7 @@ public class CacheUtils {
 
     public static boolean clearCacheDir(Context context) {
         File cacheDir = getCacheDir(context);
-        return FileUtils.deleteDir(cacheDir);
+        return FileUtils.deleteFile(cacheDir);
     }
 
     public static File getImageCacheFile(Context context) {

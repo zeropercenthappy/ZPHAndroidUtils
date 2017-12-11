@@ -75,24 +75,20 @@ public class FileUtils {
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
     }
 
-    public static boolean deleteDir(File dir) {
-        try {
-            if (dir != null && dir.isDirectory()) {
-                String[] children = dir.list();
-                //递归删除目录中的子目录下
-                for (String aChildren : children) {
-                    boolean success = deleteDir(new File(dir, aChildren));
-                    if (!success) {
-                        return false;
-                    }
-                }
-            } else {
-                return false;
+    public static boolean deleteFile(File file) {
+        if (file == null || !file.exists()) {
+            return false;
+        }
+
+        if (file.isFile()) {
+            return file.delete();
+        } else if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File subFile : files) {
+                deleteFile(subFile);
             }
-            // 目录此时为空，可以删除
-            return dir.delete();
-        } catch (SecurityException e) {
-            e.printStackTrace();
+            return file.delete();
+        } else {
             return false;
         }
     }
