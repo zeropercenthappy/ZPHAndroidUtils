@@ -96,4 +96,19 @@ public class FileUtils {
             return false;
         }
     }
+
+    public static long getFileSize(String filepath) {
+        if (TextUtils.isEmpty(filepath)) {
+            return -1;
+        }
+        File file = new File(filepath);
+        return (file.exists() && file.isFile() ? file.length() : -1);
+    }
+
+    public static long getFileSize(File file) {
+        if (file == null) {
+            return -1;
+        }
+        return (file.exists() && file.isFile() ? file.length() : -1);
+    }
 }
