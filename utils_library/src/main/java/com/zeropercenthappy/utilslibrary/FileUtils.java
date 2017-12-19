@@ -3,17 +3,31 @@ package com.zeropercenthappy.utilslibrary;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author ybq
  */
 
 public class FileUtils {
+    /**
+     * io流缓存大小
+     */
+    private static final int BUFFER_SIZE = 8192;
+
+    /**
+     * 关闭io流
+     *
+     * @param closeables
+     */
     public static void closeIO(Closeable... closeables) {
         if (null == closeables || closeables.length <= 0) {
             return;
@@ -30,7 +44,60 @@ public class FileUtils {
         }
     }
 
-    public static boolean writeFile(String filename, String content, boolean append) {
+    /**
+     * 检查文件是否存在，若不存在则新建文件
+     *
+     * @param file
+     * @return
+     */
+    public static boolean checkFileAndCreate(File file) {
+        if (file == null) {
+            return false;
+        }
+        if (!file.exists()) {
+            try {
+                return file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 检查文件是否存在，若不存在则新建文件
+     *
+     * @param path
+     * @return
+     */
+    public static boolean checkFileAndCreate(String path) {
+        if (TextUtils.isEmpty(path)) {
+            return false;
+        }
+        File file = new File(path);
+        if (!file.exists()) {
+            try {
+                return file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 向文件写入content
+     *
+     * @param filename 目标文件
+     * @param content  内容
+     * @param append   是否追加
+     * @return
+     */
+    public static boolean writeContent2File(String filename, String content, boolean append) {
         boolean isSuccess = false;
         BufferedWriter bufferedWriter = null;
         try {
@@ -45,6 +112,12 @@ public class FileUtils {
         return isSuccess;
     }
 
+    /**
+     * 获取文件的mimeType
+     *
+     * @param file
+     * @return
+     */
     public static String getFileMimeType(File file) {
         String path = file.getAbsolutePath();
 
@@ -61,6 +134,12 @@ public class FileUtils {
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
     }
 
+    /**
+     * 获取文件的mimeType
+     *
+     * @param path
+     * @return
+     */
     public static String getFileMimeType(String path) {
         if (TextUtils.isEmpty(path)) {
             return null;
@@ -75,6 +154,12 @@ public class FileUtils {
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
     }
 
+    /**
+     * 删除文件或目录
+     *
+     * @param file
+     * @return
+     */
     public static boolean deleteFile(File file) {
         if (file == null || !file.exists()) {
             return false;
@@ -93,18 +178,103 @@ public class FileUtils {
         }
     }
 
-    public static long getFileSize(String filepath) {
-        if (TextUtils.isEmpty(filepath)) {
-            return 0;
+    /**
+     * 获取文件或目录的大小，单位：Byte
+     *
+     * @param file
+     * @return
+     */
+    public static long getSize(File file) {
+        long size = 0;
+
+        if (file == null || !file.exists()) {
+            return size;
         }
-        File file = new File(filepath);
-        return (file.exists() && file.isFile() ? file.length() : 0);
+        if (file.isFile()) {
+            return file.length();
+        } else if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File subFile : files) {
+                size += getSize(subFile);
+            }
+        }
+
+        return size;
     }
 
-    public static long getFileSize(File file) {
-        if (file == null) {
+    /**
+     * 获取文件或目录的大小，单位：Byte
+     *
+     * @param path
+     * @return
+     */
+    public static long getSize(String path) {
+        if (TextUtils.isEmpty(path)) {
             return 0;
         }
-        return (file.exists() && file.isFile() ? file.length() : 0);
+        File file = new File(path);
+        long size = 0;
+
+        if (!file.exists()) {
+            return size;
+        }
+        if (file.isFile()) {
+            return file.length();
+        } else if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File subFile : files) {
+                size += getSize(subFile);
+            }
+        }
+
+        return size;
+    }
+
+    /**
+     * 复制文件
+     *
+     * @param sourceFile  源文件
+     * @param tartgetFile 目标文件
+     * @param replace     是否替换
+     * @return
+     */
+    public static boolean copyFile(File sourceFile, File tartgetFile, boolean replace) {
+        if (sourceFile == null || !sourceFile.exists()) {
+            return false;
+        }
+        if (replace && tartgetFile != null && tartgetFile.exists()) {
+            if (!deleteFile(tartgetFile)) {
+                //若目标文件删除失败
+                return false;
+            }
+        }
+        if (!checkFileAndCreate(tartgetFile)) {
+            //若目标文件创建失败
+            return false;
+        }
+
+        InputStream inputStream = null;
+        BufferedOutputStream bufferedOutputStream = null;
+        try {
+            inputStream = new FileInputStream(sourceFile);
+            bufferedOutputStream =
+                    new BufferedOutputStream(new FileOutputStream(tartgetFile, false));
+            byte data[] = new byte[BUFFER_SIZE];
+            int lengh;
+            while ((lengh = inputStream.read(data, 0, BUFFER_SIZE)) != -1) {
+                bufferedOutputStream.write(data, 0, lengh);
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (inputStream != null) {
+                closeIO(inputStream);
+            }
+            if (bufferedOutputStream != null) {
+                closeIO(bufferedOutputStream);
+            }
+        }
     }
 }
