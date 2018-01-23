@@ -17,7 +17,8 @@ public class CacheUtils {
     public static File getCacheDir(Context context) {
         File dir = context.getExternalCacheDir();
         if (dir == null) {
-            dir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/" + context.getPackageName());
+            dir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() +
+                    File.separator + context.getPackageName() + "cache");
         }
         if (!dir.exists()) {
             dir.mkdirs();
