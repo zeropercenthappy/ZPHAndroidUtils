@@ -7,7 +7,7 @@ import android.util.Log;
  */
 
 public class LogUtils {
-    private static String LogTag = "DebugTag";
+    private static String LogTag = "debug";
 
     private static boolean enable = false;
 
