@@ -16,6 +16,6 @@ allprojects {
 
 ```
 dependencies {
-        compile 'com.github.zeropercenthappy:ZPHAndroidUtils:1.0.12'
+        compile 'com.github.zeropercenthappy:ZPHAndroidUtils:1.0.13'
 }
 ```
