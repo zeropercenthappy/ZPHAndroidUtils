@@ -37,20 +37,9 @@ public class ScreenUtils {
      * @return
      */
     public static int getStatusBarHeight(Context context) {
-        Class<?> aClass;
-        Object obj;
-        Field field;
-        int statusBarHeight = 0;
-        try {
-            aClass = Class.forName("com.android.internal.R$dimen");
-            obj = aClass.newInstance();
-            field = aClass.getField("status_bar_height");
-            int x = Integer.parseInt(field.get(obj).toString());
-            statusBarHeight = context.getResources().getDimensionPixelSize(x);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        return statusBarHeight;
+        Resources resources =context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        return resources.getDimensionPixelSize(resourceId);
     }
 
     /**
