@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author ybq
@@ -86,6 +87,30 @@ public class FileUtils {
             }
         } else {
             return true;
+        }
+    }
+
+    /**
+     * 通过InputStream写入文件
+     */
+    public static boolean writeFileByIS(File storageFile, InputStream inputStream, boolean append) {
+        if (!checkFileAndCreate(storageFile) || inputStream == null) {
+            return false;
+        }
+        OutputStream outputStream = null;
+        try {
+            outputStream = new BufferedOutputStream(new FileOutputStream(storageFile, append));
+            byte[] data = new byte[BUFFER_SIZE];
+            int len;
+            while ((len = inputStream.read(data, 0, BUFFER_SIZE)) != -1) {
+                outputStream.write(data, 0, len);
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeIO(inputStream, outputStream);
         }
     }
 
