@@ -13,7 +13,7 @@ import java.util.*
 object CacheUtils {
 
     fun getCacheDir(context: Context): File? {
-        return context.externalCacheDir
+        return context.externalCacheDir ?: context.cacheDir
     }
 
     fun clearCacheDir(context: Context): Boolean {
