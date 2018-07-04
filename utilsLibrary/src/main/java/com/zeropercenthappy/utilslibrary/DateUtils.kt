@@ -185,7 +185,7 @@ object DateUtils {
         return if (week == 0) {
             7
         } else {
-            week - 1
+            week
         }
     }
 
