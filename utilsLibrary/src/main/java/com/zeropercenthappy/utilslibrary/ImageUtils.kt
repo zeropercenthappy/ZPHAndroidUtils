@@ -2,9 +2,9 @@ package com.zeropercenthappy.utilslibrary
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import java.io.BufferedOutputStream
-import java.io.File
-import java.io.FileOutputStream
+import android.text.TextUtils
+import android.util.Base64
+import java.io.*
 
 object ImageUtils {
 
@@ -46,4 +46,46 @@ object ImageUtils {
         options.inPreferredConfig = Bitmap.Config.RGB_565
         return BitmapFactory.decodeFile(imgFile.absolutePath, options)
     }
+
+    /**
+     * 图片文件转base64
+     */
+    fun imageToBase64(path: String): String? {
+        if (TextUtils.isEmpty(path)) {
+            return null
+        }
+        var fileInputStream: FileInputStream? = null
+        return try {
+            fileInputStream = FileInputStream(path)
+            val data = ByteArray(fileInputStream.available())
+            fileInputStream.read(data)
+            Base64.encodeToString(data, Base64.DEFAULT)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        } finally {
+            try {
+                fileInputStream?.apply { close() }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    /**
+     * bitmap转base64
+     */
+    fun bitmapToBase64(bitmap: Bitmap?): String? {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        return if (bitmap != null) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+            byteArrayOutputStream.flush()
+            byteArrayOutputStream.close()
+            val byteArray = byteArrayOutputStream.toByteArray()
+            return Base64.encodeToString(byteArray, Base64.DEFAULT)
+        } else {
+            null
+        }
+    }
+
 }
