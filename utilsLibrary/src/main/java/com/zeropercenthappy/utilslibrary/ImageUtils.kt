@@ -9,6 +9,28 @@ import java.io.*
 object ImageUtils {
 
     /**
+     * @param imgFile   图像文件
+     * @param scale 缩放的倍数，必须为2的整数倍
+     * @param cacheFile 压缩后文件储存的位置
+     */
+    fun compressImageByScale(imgFile: File, scale: Int, cacheFile: File): Boolean {
+        val imageFileCheck = FileUtils.checkFileAndCreate(imgFile)
+        val cacheFileCheck = FileUtils.checkFileAndCreate(cacheFile)
+        if (!imageFileCheck || !cacheFileCheck) {
+            return false
+        }
+
+        val options = BitmapFactory.Options()
+        options.inSampleSize = scale
+        val bitmap = BitmapFactory.decodeFile(imgFile.absolutePath, options)
+        val bufferedOutputStream = BufferedOutputStream(FileOutputStream(cacheFile))
+        val result = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bufferedOutputStream)
+        bufferedOutputStream.flush()
+        bufferedOutputStream.close()
+        return result
+    }
+
+    /**
      * @param imgFile 图像文件
      * @param quality 期望的质量
      * @param cacheFile 压缩后储存的位置
