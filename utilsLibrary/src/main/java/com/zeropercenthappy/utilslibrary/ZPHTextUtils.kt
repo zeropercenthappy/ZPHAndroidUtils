@@ -11,4 +11,13 @@ object ZPHTextUtils {
         }
         return true
     }
+
+    fun hasEmpty(vararg values: String): Boolean {
+        for (value in values) {
+            if (TextUtils.isEmpty(value)) {
+                return true
+            }
+        }
+        return false
+    }
 }
