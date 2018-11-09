@@ -75,7 +75,7 @@ object DateUtils {
     /**
      * 默认格式化格式时间:yyyy-MM-dd HH:mm:ss
      *
-     * @param date
+     * @param date  时间戳
      * @return
      */
     fun formatDataTime(date: Long): String {
@@ -85,7 +85,7 @@ object DateUtils {
     /**
      * 默认格式化格式时间:yyyy-MM-dd
      *
-     * @param date
+     * @param date  时间戳
      * @return
      */
     fun formatDate(date: Long): String {
@@ -95,7 +95,7 @@ object DateUtils {
     /**
      * 默认格式化格式时间:HH:mm:ss
      *
-     * @param date
+     * @param date  时间戳
      * @return
      */
     fun formatTime(date: Long): String {
@@ -212,12 +212,10 @@ object DateUtils {
      * @return 若content为0-9，则补0至两位数；若content大于等于10，则原样返回
      */
     fun formatNumber(content: Int): String {
-        return if (content in 0..9) {
-            "0$content"
-        } else if (content >= 10) {
-            content.toString()
-        } else {
-            ""
+        return when {
+            content in 0..9 -> "0$content"
+            content >= 10 -> content.toString()
+            else -> ""
         }
     }
 
@@ -229,12 +227,10 @@ object DateUtils {
      */
     fun formatNumber(content: String): String {
         val contentInt = Integer.parseInt(content)
-        return if (contentInt in 0..9) {
-            "0$content"
-        } else if (contentInt >= 10) {
-            content
-        } else {
-            ""
+        return when {
+            contentInt in 0..9 -> "0$content"
+            contentInt >= 10 -> content
+            else -> ""
         }
     }
 }
