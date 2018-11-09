@@ -1,4 +1,4 @@
-package com.zeropercenthappy.utilslibrary
+package com.zeropercenthappy.utilslibrary.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
