@@ -1,4 +1,4 @@
-package com.zeropercenthappy.utilslibrary
+package com.zeropercenthappy.utilslibrary.utils
 
 import android.text.TextUtils
 import android.webkit.MimeTypeMap

@@ -1,4 +1,4 @@
-package com.zeropercenthappy.utilslibrary
+package com.zeropercenthappy.utilslibrary.utils
 
 import android.os.Build
 import java.io.File
