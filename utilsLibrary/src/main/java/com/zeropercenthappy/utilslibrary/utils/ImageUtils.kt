@@ -34,20 +34,6 @@ object ImageUtils {
 
     /**
      * @param imgFile 图像文件
-     * @param maxSideLength 缩放后bitmap的最长边长度，单位：像素
-     * @param cacheFile 压缩后储存的位置
-     */
-    fun compressImageByMaxScale(imgFile: File, maxSideLength: Int, cacheFile: File): Boolean {
-        val scaledBitmap = loadScaledBitmap(imgFile, maxSideLength) ?: return false
-        val bufferedOutputStream = BufferedOutputStream(FileOutputStream(cacheFile))
-        val result = scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bufferedOutputStream)
-        bufferedOutputStream.flush()
-        bufferedOutputStream.close()
-        return result
-    }
-
-    /**
-     * @param imgFile 图像文件
      * @param quality 期望的质量
      * @param cacheFile 压缩后储存的位置
      */
@@ -93,26 +79,6 @@ object ImageUtils {
             e.printStackTrace()
             return false
         }
-    }
-
-    /**
-     * @param imgFile 图像文件
-     * @param maxSideLength 缩放后bitmap的最长边长度，单位：像素
-     */
-    fun loadScaledBitmap(imgFile: File, maxSideLength: Int): Bitmap? {
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(imgFile.absolutePath, options)
-        var currentMaxSide = Math.max(options.outWidth, options.outHeight)
-        var sampleSize = 0
-        while (currentMaxSide > maxSideLength) {
-            sampleSize += 2
-            currentMaxSide /= 2
-        }
-        options.inJustDecodeBounds = false
-        options.inSampleSize = sampleSize
-        options.inPreferredConfig = Bitmap.Config.RGB_565
-        return BitmapFactory.decodeFile(imgFile.absolutePath, options)
     }
 
     /**
