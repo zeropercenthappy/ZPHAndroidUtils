@@ -13,6 +13,7 @@ object NumberUtils {
      * @param scaleNumber 保留的小数位数
      * @return 格式化后的String
      */
+    @JvmStatic
     fun formatDecimal(content: Float, scaleNumber: Int): String {
         val ruleSB = StringBuilder("#.")
         for (i in 0 until scaleNumber) {
@@ -34,6 +35,7 @@ object NumberUtils {
      * @param scaleNumber 保留的小数位数
      * @return 格式化后的String
      */
+    @JvmStatic
     fun formatDecimal(content: Double, scaleNumber: Int): String {
         val ruleSB = StringBuilder("#.")
         for (i in 0 until scaleNumber) {

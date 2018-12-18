@@ -17,6 +17,7 @@ object CoordinateTransformUtil {
      * @param lat
      * @return
      */
+    @JvmStatic
     fun bd09towgs84(lng: Double, lat: Double): DoubleArray {
         val gcj = bd09togcj02(lng, lat)
         return gcj02towgs84(gcj[0], gcj[1])
@@ -29,6 +30,7 @@ object CoordinateTransformUtil {
      * @param lat
      * @return
      */
+    @JvmStatic
     fun wgs84tobd09(lng: Double, lat: Double): DoubleArray {
         val gcj = wgs84togcj02(lng, lat)
         return gcj02tobd09(gcj[0], gcj[1])
@@ -41,6 +43,7 @@ object CoordinateTransformUtil {
      * @param lat
      * @return
      */
+    @JvmStatic
     fun gcj02tobd09(lng: Double, lat: Double): DoubleArray {
         val z = Math.sqrt(lng * lng + lat * lat) + 0.00002 * Math.sin(lat * X_PI)
         val theta = Math.atan2(lat, lng) + 0.000003 * Math.cos(lng * X_PI)
@@ -56,6 +59,7 @@ object CoordinateTransformUtil {
      * @param bd_lat
      * @return
      */
+    @JvmStatic
     fun bd09togcj02(bd_lon: Double, bd_lat: Double): DoubleArray {
         val x = bd_lon - 0.0065
         val y = bd_lat - 0.006
@@ -73,6 +77,7 @@ object CoordinateTransformUtil {
      * @param lat
      * @return
      */
+    @JvmStatic
     fun wgs84togcj02(lng: Double, lat: Double): DoubleArray {
         if (out_of_china(lng, lat)) {
             return doubleArrayOf(lng, lat)
@@ -96,6 +101,7 @@ object CoordinateTransformUtil {
      * @param lat
      * @return
      */
+    @JvmStatic
     fun gcj02towgs84(lng: Double, lat: Double): DoubleArray {
         if (out_of_china(lng, lat)) {
             return doubleArrayOf(lng, lat)
@@ -113,6 +119,7 @@ object CoordinateTransformUtil {
         return doubleArrayOf(lng * 2 - mglng, lat * 2 - mglat)
     }
 
+    @JvmStatic
     fun transformlat(lng: Double, lat: Double): Double {
         var ret = -100.0 + 2.0 * lng + 3.0 * lat + 0.2 * lat * lat + 0.1 * lng * lat + 0.2 * Math.sqrt(Math.abs(lng))
         ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0
@@ -121,6 +128,7 @@ object CoordinateTransformUtil {
         return ret
     }
 
+    @JvmStatic
     fun transformlng(lng: Double, lat: Double): Double {
         var ret = 300.0 + lng + 2.0 * lat + 0.1 * lng * lng + 0.1 * lng * lat + 0.1 * Math.sqrt(Math.abs(lng))
         ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0
@@ -129,6 +137,7 @@ object CoordinateTransformUtil {
         return ret
     }
 
+    @JvmStatic
     fun out_of_china(lng: Double, lat: Double): Boolean {
         if (lng < 72.004 || lng > 137.8347) {
             return true

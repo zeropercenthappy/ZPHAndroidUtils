@@ -15,6 +15,7 @@ object FileUtils {
      *
      * @param closeables
      */
+    @JvmStatic
     fun closeIO(vararg closeables: Closeable?) {
         if (closeables.isEmpty()) {
             return
@@ -34,6 +35,7 @@ object FileUtils {
      * @param file
      * @return
      */
+    @JvmStatic
     fun checkFileAndCreate(file: File?): Boolean {
         if (file == null) {
             return false
@@ -56,6 +58,7 @@ object FileUtils {
      * @param path
      * @return
      */
+    @JvmStatic
     fun checkFileAndCreate(path: String): Boolean {
         if (TextUtils.isEmpty(path)) {
             return false
@@ -76,6 +79,7 @@ object FileUtils {
     /**
      * 通过InputStream写入文件
      */
+    @JvmStatic
     fun writeFileByIS(storageFile: File, inputStream: InputStream, append: Boolean): Boolean {
         if (!checkFileAndCreate(storageFile)) {
             return false
@@ -111,6 +115,7 @@ object FileUtils {
      * @param append   是否追加
      * @return
      */
+    @JvmStatic
     fun writeContent2File(filename: String, content: String, append: Boolean): Boolean {
         try {
             val bufferedWriter = BufferedWriter(FileWriter(filename, append))
@@ -130,6 +135,7 @@ object FileUtils {
      * @param file
      * @return
      */
+    @JvmStatic
     fun getFileMimeType(file: File): String? {
         val path = file.absolutePath
         if (TextUtils.isEmpty(path)) {
@@ -150,6 +156,7 @@ object FileUtils {
      * @param path
      * @return
      */
+    @JvmStatic
     fun getFileMimeType(path: String): String? {
         if (TextUtils.isEmpty(path)) {
             return null
@@ -169,6 +176,7 @@ object FileUtils {
      * @param file
      * @return
      */
+    @JvmStatic
     fun deleteFile(file: File): Boolean {
         if (!file.exists()) {
             return false

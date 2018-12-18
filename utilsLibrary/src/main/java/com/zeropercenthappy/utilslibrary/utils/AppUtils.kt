@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 /**
  * @author ybq
  */
-
 object AppUtils {
     /**
      * 获取应用版本名称
@@ -14,6 +13,7 @@ object AppUtils {
      * @param context
      * @return
      */
+    @JvmStatic
     fun getAppVersionName(context: Context): String {
         val packageName = context.packageName
         return try {
@@ -31,6 +31,7 @@ object AppUtils {
      * @param context
      * @return
      */
+    @JvmStatic
     fun getAppVersionCode(context: Context): Int {
         val packageName = context.packageName
         return try {
@@ -49,6 +50,7 @@ object AppUtils {
      * @param packageName
      * @return
      */
+    @JvmStatic
     fun getAppName(context: Context, packageName: String): String {
         val pm = context.packageManager
         return try {

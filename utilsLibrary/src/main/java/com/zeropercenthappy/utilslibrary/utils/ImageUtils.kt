@@ -15,6 +15,7 @@ object ImageUtils {
      * @param scale 缩放的倍数，必须为2的整数倍
      * @param cacheFile 压缩后文件储存的位置
      */
+    @JvmStatic
     fun compressImageByScale(imgFile: File, scale: Int, cacheFile: File): Boolean {
         val imageFileCheck = FileUtils.checkFileAndCreate(imgFile)
         val cacheFileCheck = FileUtils.checkFileAndCreate(cacheFile)
@@ -37,6 +38,7 @@ object ImageUtils {
      * @param quality 期望的质量
      * @param cacheFile 压缩后储存的位置
      */
+    @JvmStatic
     fun compressImageByQuality(imgFile: File, quality: Int, cacheFile: File): Boolean {
         val imageFileCheck = FileUtils.checkFileAndCreate(imgFile)
         val cacheFileCheck = FileUtils.checkFileAndCreate(cacheFile)
@@ -55,6 +57,7 @@ object ImageUtils {
      * @param imgFile 图像文件
      * @param cacheFile 压缩后储存的位置
      */
+    @JvmStatic
     fun rotateImage(imgFile: File, cacheFile: File): Boolean {
         try {
             val bitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
@@ -84,6 +87,7 @@ object ImageUtils {
     /**
      * 图片文件转base64
      */
+    @JvmStatic
     fun imageToBase64(path: String): String? {
         if (TextUtils.isEmpty(path)) {
             return null
@@ -109,6 +113,7 @@ object ImageUtils {
     /**
      * bitmap转base64
      */
+    @JvmStatic
     fun bitmapToBase64(bitmap: Bitmap?): String? {
         val byteArrayOutputStream = ByteArrayOutputStream()
         return if (bitmap != null) {

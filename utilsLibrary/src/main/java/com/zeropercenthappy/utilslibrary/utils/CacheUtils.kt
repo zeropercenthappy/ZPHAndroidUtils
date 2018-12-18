@@ -12,10 +12,12 @@ import java.util.*
 
 object CacheUtils {
 
+    @JvmStatic
     fun getCacheDir(context: Context): File? {
         return context.externalCacheDir ?: context.cacheDir
     }
 
+    @JvmStatic
     fun clearCacheDir(context: Context): Boolean {
         val cacheDir = getCacheDir(context) ?: return false
         return FileUtils.deleteFile(cacheDir)
@@ -26,6 +28,7 @@ object CacheUtils {
      * @param fileName 想要保存的缓存文件名，包括后缀名。若有已存在的同名文件将会覆盖
      * @return
      */
+    @JvmStatic
     fun createCacheFile(context: Context, fileName: String): File? {
         val dir = getCacheDir(context) ?: return null
         val cacheFilePath = dir.path + File.separator + fileName
@@ -47,6 +50,7 @@ object CacheUtils {
      * @param fileExtension 想要保存的缓存文件后缀名
      * @return
      */
+    @JvmStatic
     fun createFormatedCacheFile(context: Context, fileExtension: String): File? {
         val simpleDateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.US)
         val cacheDir = getCacheDir(context) ?: return null

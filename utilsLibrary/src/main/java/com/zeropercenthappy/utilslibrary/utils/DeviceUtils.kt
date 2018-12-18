@@ -11,6 +11,7 @@ object DeviceUtils {
      *
      * @return
      */
+    @JvmStatic
     fun getcoreNum(): Int {
         val dir = File("/sys/devices/system/cpu/")
         val files = dir.listFiles { pathname -> Pattern.matches("cpu[0-9]", pathname.name) }
@@ -23,6 +24,7 @@ object DeviceUtils {
      *
      * @return
      */
+    @JvmStatic
     fun getPsuedoUniqueID(): String {
         var devIDShort = "35" + Build.BOARD.length % 10 + Build.BRAND.length % 10
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

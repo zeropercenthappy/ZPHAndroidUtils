@@ -16,6 +16,7 @@ object ScreenUtils {
      * @param context
      * @return
      */
+    @JvmStatic
     fun getScreenWidth(context: Context): Int {
         return context.resources.displayMetrics.widthPixels
     }
@@ -26,6 +27,7 @@ object ScreenUtils {
      * @param context
      * @return
      */
+    @JvmStatic
     fun getScreenHeight(context: Context): Int {
         return context.resources.displayMetrics.heightPixels
     }
@@ -36,6 +38,7 @@ object ScreenUtils {
      * @param context
      * @return
      */
+    @JvmStatic
     fun getStatusBarHeight(context: Context): Int {
         val resources = context.resources
         val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
@@ -48,6 +51,7 @@ object ScreenUtils {
      * @param context
      * @return
      */
+    @JvmStatic
     fun getNavigationBarHeight(context: Context): Int {
         val resources = context.resources
         val identifier = resources.getIdentifier("navigation_bar_height", "dimen", "android")

@@ -18,6 +18,7 @@ object DateUtils {
      *
      * @return
      */
+    @JvmStatic
     val currentMonthMaxDay: Int
         get() {
             val calendar = Calendar.getInstance()
@@ -29,6 +30,7 @@ object DateUtils {
      *
      * @return
      */
+    @JvmStatic
     val currentYear: Int
         get() {
             val simpleDateFormat = SimpleDateFormat("yyyy", Locale.US)
@@ -41,6 +43,7 @@ object DateUtils {
      *
      * @return 中国时间的当前月
      */
+    @JvmStatic
     val currentMonth: Int
         get() {
             val simpleDateFormat = SimpleDateFormat("MM", Locale.US)
@@ -53,6 +56,7 @@ object DateUtils {
      *
      * @return
      */
+    @JvmStatic
     val currentDay: Int
         get() {
             val simpleDateFormat = SimpleDateFormat("dd", Locale.US)
@@ -65,6 +69,7 @@ object DateUtils {
      *
      * @return 当前时
      */
+    @JvmStatic
     val currentHour: Int
         get() {
             val simpleDateFormat = SimpleDateFormat("HH", Locale.US)
@@ -78,6 +83,7 @@ object DateUtils {
      * @param date  时间戳
      * @return
      */
+    @JvmStatic
     fun formatDataTime(date: Long): String {
         return DATE_FORMAT_DATETIME.format(Date(date))
     }
@@ -88,6 +94,7 @@ object DateUtils {
      * @param date  时间戳
      * @return
      */
+    @JvmStatic
     fun formatDate(date: Long): String {
         return DATE_FORMAT_DATE.format(Date(date))
     }
@@ -98,6 +105,7 @@ object DateUtils {
      * @param date  时间戳
      * @return
      */
+    @JvmStatic
     fun formatTime(date: Long): String {
         return DATE_FORMAT_TIME.format(Date(date))
     }
@@ -109,6 +117,7 @@ object DateUtils {
      * @param format  自定义的格式
      * @return
      */
+    @JvmStatic
     fun formatDateCustom(dateStr: String, format: String): String {
         return SimpleDateFormat(format, Locale.US).format(Date(java.lang.Long.parseLong(dateStr)))
     }
@@ -120,6 +129,7 @@ object DateUtils {
      * @param format 自定义的格式
      * @return
      */
+    @JvmStatic
     fun formatDateCustom(date: Date, format: String): String {
         return SimpleDateFormat(format, Locale.US).format(date)
     }
@@ -131,6 +141,7 @@ object DateUtils {
      * @param month 月份 (1-12)
      * @return
      */
+    @JvmStatic
     fun getCalendarByYearMonth(year: Int, month: Int): Calendar {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, year)
@@ -145,6 +156,7 @@ object DateUtils {
      * @param month 月份 (1-12)
      * @return 某个月最大天数
      */
+    @JvmStatic
     fun getMaxDayByYearMonth(year: Int, month: Int): Int {
         val calendar = getCalendarByYearMonth(year, month)
         return calendar.getActualMaximum(Calendar.DATE)
@@ -157,6 +169,7 @@ object DateUtils {
      * @param month 月份 (1-12)
      * @return 中国时间的周几
      */
+    @JvmStatic
     fun getFirstDayOfWeekByYearMonth(year: Int, month: Int): Int {
         val calendar = getCalendarByYearMonth(year, month)
         calendar.set(Calendar.DAY_OF_MONTH, 1)
@@ -177,6 +190,7 @@ object DateUtils {
      * @param day   日期
      * @return 中国时间的周几
      */
+    @JvmStatic
     fun getDayOfWeekByYearMonthDay(year: Int, month: Int, day: Int): Int {
         val calendar = getCalendarByYearMonth(year, month)
         calendar.set(Calendar.DAY_OF_MONTH, day)
@@ -197,6 +211,7 @@ object DateUtils {
      * @param style        时间的格式
      * @return 指定时间的Date对象或null
      */
+    @JvmStatic
     fun string2Date(dateFormatted: String, style: String): Date? {
         val simpleDateFormat = SimpleDateFormat(style, Locale.US)
         if (dateFormatted.length < 6) {
@@ -211,6 +226,7 @@ object DateUtils {
      * @param content 数字
      * @return 若content为0-9，则补0至两位数；若content大于等于10，则原样返回
      */
+    @JvmStatic
     fun formatNumber(content: Int): String {
         return when {
             content in 0..9 -> "0$content"
@@ -225,6 +241,7 @@ object DateUtils {
      * @param content 数字
      * @return 若content为0-9，则补0至两位数；若content大于等于10，则原样返回
      */
+    @JvmStatic
     fun formatNumber(content: String): String {
         val contentInt = Integer.parseInt(content)
         return when {

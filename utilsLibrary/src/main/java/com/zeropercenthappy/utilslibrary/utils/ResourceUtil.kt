@@ -8,6 +8,7 @@ object ResourceUtil {
      * @param className id,layout,drawable,etc.
      * @param resourceName resource name
      */
+    @JvmStatic
     fun getIdByName(context: Context, className: String, resourceName: String): Int {
         val packageName = context.packageName
         var id = 0
