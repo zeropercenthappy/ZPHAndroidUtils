@@ -1,9 +1,6 @@
 package com.zeropercenthappy.utilslibrary.utils
 
 import android.content.Context
-import android.content.res.Resources
-
-import java.lang.reflect.Field
 
 /**
  * Created by ybq on 2017/4/24.
