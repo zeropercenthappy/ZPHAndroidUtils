@@ -54,8 +54,8 @@ object CacheUtils {
     fun createFormatedCacheFile(context: Context, fileExtension: String): File? {
         val simpleDateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.US)
         val cacheDir = getCacheDir(context) ?: return null
-        val fotmatedExetension = if (fileExtension.startsWith(".")) fileExtension else ".$fileExtension"
-        val cacheFilePath = cacheDir.absolutePath + File.separator + simpleDateFormat.format(System.currentTimeMillis()) + fotmatedExetension
+        val formattedExtension = if (fileExtension.startsWith(".")) fileExtension else ".$fileExtension"
+        val cacheFilePath = cacheDir.absolutePath + File.separator + simpleDateFormat.format(System.currentTimeMillis()) + formattedExtension
         val cacheFile = File(cacheFilePath)
         if (cacheFile.exists()) {
             cacheFile.delete()
