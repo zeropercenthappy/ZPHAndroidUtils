@@ -1,7 +1,9 @@
 # ZPHAndroidUtils
+
 Common Android Utils
 
 ## Step 1. Add it in your root build.gradle at the end of repositories
+
 ```
 allprojects {
 	repositories {
@@ -12,8 +14,9 @@ allprojects {
 ```
 
 ## Step 2. Add the dependency
+
 ```
 dependencies {
-        implementation 'com.github.zeropercenthappy:ZPHAndroidUtils:1.1.7'
+        implementation 'com.github.zeropercenthappy:ZPHAndroidUtils:1.1.8'
 }
 ```
