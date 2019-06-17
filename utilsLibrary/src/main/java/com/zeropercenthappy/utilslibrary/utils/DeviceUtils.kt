@@ -27,11 +27,12 @@ object DeviceUtils {
     @JvmStatic
     fun getPsuedoUniqueID(): String {
         var devIDShort = "35" + Build.BOARD.length % 10 + Build.BRAND.length % 10
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            devIDShort += Build.SUPPORTED_ABIS[0].length % 10
-        } else {
-            devIDShort += Build.CPU_ABI.length % 10
-        }
+        devIDShort +=
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Build.SUPPORTED_ABIS[0].length % 10
+                } else {
+                    Build.CPU_ABI.length % 10
+                }
         devIDShort += Build.DEVICE.length % 10 + Build.MANUFACTURER.length % 10 + Build.MODEL.length % 10 + Build.PRODUCT.length % 10
         var serial: String
         try {

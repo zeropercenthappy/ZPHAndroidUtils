@@ -18,6 +18,6 @@ allprojects {
 
 ```
 dependencies {
-        implementation 'com.github.zeropercenthappy:ZPHAndroidUtils:1.1.8'
+        implementation 'com.github.zeropercenthappy:ZPHAndroidUtils:1.1.9'
 }
 ```

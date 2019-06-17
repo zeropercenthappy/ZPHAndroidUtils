@@ -86,7 +86,7 @@ object FileUtils {
         }
         val bufferedOutputStream = BufferedOutputStream(FileOutputStream(storageFile))
         val buffer = ByteArray(BUFFER_SIZE)
-        var currentLength = -1
+        var currentLength: Int
         try {
             while (true) {
                 currentLength = inputStream.read(buffer, 0, BUFFER_SIZE)

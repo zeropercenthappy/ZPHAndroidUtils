@@ -2,9 +2,8 @@ package com.zeropercenthappy.zphandroidutilssample
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import org.jetbrains.anko.AnkoLogger
 
-class MainActivity : AppCompatActivity(), AnkoLogger {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
