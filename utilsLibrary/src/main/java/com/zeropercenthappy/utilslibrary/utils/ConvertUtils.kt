@@ -1,8 +1,9 @@
 package com.zeropercenthappy.utilslibrary.utils
 
-import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.PixelFormat
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 
@@ -18,20 +19,39 @@ object ConvertUtils {
      * @return bitmap
      */
     @JvmStatic
-    fun drawable2Bitmap(drawable: Drawable?): Bitmap? {
-        return if (drawable == null) null else (drawable as BitmapDrawable).bitmap
+    fun drawable2Bitmap(drawable: Drawable): Bitmap {
+        if (drawable is BitmapDrawable) {
+            if (drawable.bitmap != null) {
+                return drawable.bitmap
+            }
+        }
+        val bitmapConfig =
+                if (drawable.opacity != PixelFormat.OPAQUE) {
+                    Bitmap.Config.ARGB_8888
+                } else {
+                    Bitmap.Config.RGB_565
+                }
+        val bitmap =
+                if (drawable.intrinsicWidth <= 0 || drawable.intrinsicHeight <= 0) {
+                    Bitmap.createBitmap(1, 1, bitmapConfig)
+                } else {
+                    Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, bitmapConfig)
+                }
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bitmap
     }
 
     /**
      * bitmap转drawable
      *
-     * @param res    resources对象
      * @param bitmap bitmap对象
      * @return drawable
      */
     @JvmStatic
-    fun bitmap2Drawable(res: Resources, bitmap: Bitmap?): Drawable? {
-        return if (bitmap == null) null else BitmapDrawable(res, bitmap)
+    fun bitmap2Drawable(bitmap: Bitmap?): Drawable? {
+        return if (bitmap == null) null else BitmapDrawable(Resources.getSystem(), bitmap)
     }
 
     /**
@@ -41,8 +61,8 @@ object ConvertUtils {
      * @return px值
      */
     @JvmStatic
-    fun dp2px(context: Context, dpValue: Float): Int {
-        val scale = context.resources.displayMetrics.density
+    fun dp2px(dpValue: Float): Int {
+        val scale = Resources.getSystem().displayMetrics.density
         return (dpValue * scale + 0.5f).toInt()
     }
 
@@ -53,8 +73,8 @@ object ConvertUtils {
      * @return dp值
      */
     @JvmStatic
-    fun px2dp(context: Context, pxValue: Float): Int {
-        val scale = context.resources.displayMetrics.density
+    fun px2dp(pxValue: Float): Int {
+        val scale = Resources.getSystem().displayMetrics.density
         return (pxValue / scale + 0.5f).toInt()
     }
 
@@ -65,8 +85,8 @@ object ConvertUtils {
      * @return px值
      */
     @JvmStatic
-    fun sp2px(context: Context, spValue: Float): Int {
-        val fontScale = context.resources.displayMetrics.scaledDensity
+    fun sp2px(spValue: Float): Int {
+        val fontScale = Resources.getSystem().displayMetrics.scaledDensity
         return (spValue * fontScale + 0.5f).toInt()
     }
 
@@ -77,8 +97,8 @@ object ConvertUtils {
      * @return sp值
      */
     @JvmStatic
-    fun px2sp(context: Context, pxValue: Float): Int {
-        val fontScale = context.resources.displayMetrics.scaledDensity
+    fun px2sp(pxValue: Float): Int {
+        val fontScale = Resources.getSystem().displayMetrics.scaledDensity
         return (pxValue / fontScale + 0.5f).toInt()
     }
 
