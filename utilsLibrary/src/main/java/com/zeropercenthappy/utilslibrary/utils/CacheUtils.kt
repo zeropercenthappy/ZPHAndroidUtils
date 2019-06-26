@@ -12,6 +12,11 @@ import java.util.*
 
 object CacheUtils {
 
+    /**
+     * 获取缓存文件夹
+     * context.externalCacheDir ->  /storage/emulated/0/Android/data/com.zeropercenthappy.zphandroidutilssample/cache
+     * context.cacheDir -> /data/user/0/{packageName}/cache
+     */
     @JvmStatic
     fun getCacheDir(context: Context): File? {
         return context.externalCacheDir ?: context.cacheDir
