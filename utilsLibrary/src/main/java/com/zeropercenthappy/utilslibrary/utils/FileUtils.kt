@@ -8,7 +8,7 @@ object FileUtils {
     /**
      * io流缓存大小
      */
-    private val BUFFER_SIZE = 8192
+    private const val BUFFER_SIZE = 8192
 
     /**
      * 关闭io流
@@ -168,6 +168,76 @@ object FileUtils {
         var extension = path.substring(dotPosition + 1)
         extension = extension.toLowerCase()
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+    }
+
+    /**
+     * 获取文件或目录的大小，单位：Byte
+     *
+     * @param file
+     * @return
+     */
+    fun getSize(file: File?): Long {
+        var size: Long = 0
+        if (file == null || !file.exists()) {
+            return size
+        }
+        if (file.isFile) {
+            return file.length()
+        } else if (file.isDirectory) {
+            val files = file.listFiles()
+            for (subFile in files) {
+                size += getSize(subFile)
+            }
+        }
+        return size
+    }
+
+    /**
+     * 复制文件
+     *
+     * @param sourceFile  源文件
+     * @param targetFile 目标文件
+     * @return
+     */
+    fun copyFile(sourceFile: File, targetFile: File): Boolean {
+        if (!sourceFile.exists()) {
+            // 若源文件不存在
+            return false
+        }
+        if (!deleteFile(targetFile)) {
+            // 若旧目标文件删除失败
+            return false
+        }
+        if (!checkFileAndCreate(targetFile)) {
+            // 若目标文件创建失败
+            return false
+        }
+        var inputStream: InputStream? = null
+        var bufferedOutputStream: BufferedOutputStream? = null
+        try {
+            inputStream = FileInputStream(sourceFile)
+            bufferedOutputStream = BufferedOutputStream(FileOutputStream(targetFile, false))
+            val data = ByteArray(BUFFER_SIZE)
+            while (true) {
+                val length = inputStream.read(data, 0, BUFFER_SIZE)
+                if (length != -1) {
+                    bufferedOutputStream.write(data, 0, length)
+                } else {
+                    break
+                }
+            }
+            return true
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return false
+        } finally {
+            if (inputStream != null) {
+                closeIO(inputStream)
+            }
+            if (bufferedOutputStream != null) {
+                closeIO(bufferedOutputStream)
+            }
+        }
     }
 
     /**
