@@ -14,7 +14,7 @@ object CacheUtils {
 
     /**
      * 获取缓存文件夹
-     * context.externalCacheDir ->  /storage/emulated/0/Android/data/com.zeropercenthappy.zphandroidutilssample/cache
+     * context.externalCacheDir ->  /storage/emulated/0/Android/data/{packageName}/cache
      * context.cacheDir -> /data/user/0/{packageName}/cache
      */
     @JvmStatic
@@ -30,7 +30,7 @@ object CacheUtils {
 
     /**
      * @param context
-     * @param fileName 想要保存的缓存文件名，包括后缀名。若有已存在的同名文件将会覆盖
+     * @param fileName 想要保存的缓存文件名，包括后缀名。若有已存在的同名文件将会删除旧文件
      * @return
      */
     @JvmStatic
