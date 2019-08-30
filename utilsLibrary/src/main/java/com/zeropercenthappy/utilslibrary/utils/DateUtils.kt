@@ -8,10 +8,9 @@ import java.util.*
  */
 
 object DateUtils {
-    private val DATE_FORMAT_DATETIME = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-    private val DATE_FORMAT_DATE = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    private val DATE_FORMAT_TIME = SimpleDateFormat("HH:mm:ss", Locale.US)
-
+    private const val DATE_FORMAT_DATETIME = "yyyy-MM-dd HH:mm:ss"
+    private const val DATE_FORMAT_DATE = "yyyy-MM-dd"
+    private const val DATE_FORMAT_TIME = "HH:mm:ss"
 
     /**
      * 获取当前月最大天数
@@ -85,7 +84,7 @@ object DateUtils {
      */
     @JvmStatic
     fun formatDataTime(date: Long): String {
-        return DATE_FORMAT_DATETIME.format(Date(date))
+        return SimpleDateFormat(DATE_FORMAT_DATETIME, Locale.US).format(Date(date))
     }
 
     /**
@@ -96,7 +95,7 @@ object DateUtils {
      */
     @JvmStatic
     fun formatDate(date: Long): String {
-        return DATE_FORMAT_DATE.format(Date(date))
+        return SimpleDateFormat(DATE_FORMAT_DATE, Locale.US).format(Date(date))
     }
 
     /**
@@ -107,7 +106,7 @@ object DateUtils {
      */
     @JvmStatic
     fun formatTime(date: Long): String {
-        return DATE_FORMAT_TIME.format(Date(date))
+        return SimpleDateFormat(DATE_FORMAT_TIME, Locale.US).format(Date(date))
     }
 
     /**
