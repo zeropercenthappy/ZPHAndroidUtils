@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.support.v4.content.FileProvider
-import com.zeropercenthappy.utilslibrary.provider.UtilsFileProvider
 import java.io.File
 
 /**
@@ -79,7 +78,7 @@ object AppUtils {
             return
         }
         val intent = Intent(Intent.ACTION_VIEW)
-        val type = "application/vnd.android.package-archive"
+        val type = FileUtils.getFileMimeTypeByExtension("apk")
         val data: Uri?
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             data = Uri.fromFile(apkFile)

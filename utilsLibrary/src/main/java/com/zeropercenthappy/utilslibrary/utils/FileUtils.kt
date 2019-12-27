@@ -171,6 +171,17 @@ object FileUtils {
     }
 
     /**
+     * 获取制定后缀名的mimeType
+     *
+     * @param extension 后缀名
+     * @return
+     */
+    @JvmStatic
+    fun getFileMimeTypeByExtension(extension: String): String? {
+        return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.toLowerCase())
+    }
+
+    /**
      * 获取文件或目录的大小，单位：Byte
      *
      * @param file
