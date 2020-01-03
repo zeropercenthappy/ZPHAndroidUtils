@@ -3,7 +3,6 @@ package com.zeropercenthappy.utilslibrary.utils
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-
 object NumberUtils {
 
     /**
@@ -50,4 +49,23 @@ object NumberUtils {
         return result.toString()
     }
 
+    /**
+     * 获取指定数据的二进制数某一位的数据
+     * @param data          目标数据
+     * @param position      指定二进制的某个位置，从0开始，从右数起
+     * @return              指定位置的数，0或1
+     */
+    fun getBinaryDataPosition(data: Int, position: Int): Int {
+        return data shr position and 1
+    }
+
+    /**
+     * 获取指定数据的二进制数某一位的数据
+     * @param data    目标数据
+     * @param position      指定二进制的某个位置，从0开始，从右数起
+     * @return              指定位置的数，0或1
+     */
+    fun getBinaryDataPosition(data: Long, position: Int): Int {
+        return (data shr position and 1).toInt()
+    }
 }
