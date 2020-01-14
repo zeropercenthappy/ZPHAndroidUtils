@@ -115,24 +115,29 @@ object FileUtils {
     /**
      * Write string to a file.
      *
-     * @param file      file
+     * @param destinationFile   file
      *
-     * @param content   content
+     * @param content           content
      *
-     * @param append    is append
+     * @param append            is append
      *
-     * @return          write result
+     * @return                  write result
      */
     @JvmStatic
-    fun writeString2File(file: File, content: String, append: Boolean) = try {
-        val bufferedWriter = BufferedWriter(FileWriter(file.absolutePath, append))
-        bufferedWriter.write(content)
-        bufferedWriter.flush()
-        closeIO(bufferedWriter)
-        true
-    } catch (e: IOException) {
-        e.printStackTrace()
-        false
+    fun writeString2File(destinationFile: File, content: String, append: Boolean): Boolean {
+        try {
+            if (!checkFileAndCreate(destinationFile)) {
+                return false
+            }
+            val bufferedWriter = BufferedWriter(FileWriter(destinationFile.absolutePath, append))
+            bufferedWriter.write(content)
+            bufferedWriter.flush()
+            closeIO(bufferedWriter)
+            return true
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return false
+        }
     }
 
 

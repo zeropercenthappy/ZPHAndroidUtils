@@ -30,19 +30,22 @@ object CacheUtils {
 
     /**
      * @param context
-     * @param fileName 想要保存的缓存文件名，包括后缀名。若有已存在的同名文件将会删除旧文件
+     *
+     * @param fileName      想要保存的缓存文件名，包括后缀名
+     *
+     * @param createFile    若cacheFile不存在，是否需要自动创建空文件
+     *
      * @return
      */
     @JvmStatic
-    fun createCacheFile(context: Context, fileName: String): File? {
+    fun createCacheFile(context: Context, fileName: String, createFile: Boolean): File? {
         val dir = getCacheDir(context) ?: return null
         val cacheFilePath = dir.path + File.separator + fileName
         val cacheFile = File(cacheFilePath)
-        if (cacheFile.exists()) {
-            cacheFile.delete()
-        }
         try {
-            cacheFile.createNewFile()
+            if (createFile && !cacheFile.exists()) {
+                cacheFile.createNewFile()
+            }
         } catch (e: IOException) {
             e.printStackTrace()
             return null
@@ -52,21 +55,30 @@ object CacheUtils {
 
     /**
      * @param context
+     *
      * @param fileExtension 想要保存的缓存文件后缀名
+     *
+     * @param createFile    若cacheFile不存在，是否需要自动创建空文件
+     *
      * @return
      */
     @JvmStatic
-    fun createFormatedCacheFile(context: Context, fileExtension: String): File? {
+    fun createFormatedCacheFile(
+        context: Context,
+        fileExtension: String,
+        createFile: Boolean
+    ): File? {
         val simpleDateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.US)
         val cacheDir = getCacheDir(context) ?: return null
-        val formattedExtension = if (fileExtension.startsWith(".")) fileExtension else ".$fileExtension"
-        val cacheFilePath = cacheDir.absolutePath + File.separator + simpleDateFormat.format(System.currentTimeMillis()) + formattedExtension
+        val formattedExtension =
+            if (fileExtension.startsWith(".")) fileExtension else ".$fileExtension"
+        val cacheFilePath =
+            cacheDir.absolutePath + File.separator + simpleDateFormat.format(System.currentTimeMillis()) + formattedExtension
         val cacheFile = File(cacheFilePath)
-        if (cacheFile.exists()) {
-            cacheFile.delete()
-        }
         try {
-            cacheFile.createNewFile()
+            if (createFile && !cacheFile.exists()) {
+                cacheFile.createNewFile()
+            }
         } catch (e: IOException) {
             e.printStackTrace()
             return null
