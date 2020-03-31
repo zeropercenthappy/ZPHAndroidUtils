@@ -1,6 +1,10 @@
 package com.zeropercenthappy.utilslibrary.utils
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
+import android.provider.Settings
+import android.text.TextUtils
 import java.io.File
 import java.util.*
 import java.util.regex.Pattern
@@ -8,39 +12,30 @@ import java.util.regex.Pattern
 object DeviceUtils {
     /**
      * 获取内核数
-     *
-     * @return
      */
     @JvmStatic
-    fun getcoreNum(): Int {
+    fun getCoreNum(): Int {
         val dir = File("/sys/devices/system/cpu/")
         val files = dir.listFiles { pathname -> Pattern.matches("cpu[0-9]", pathname.name) }
-        dir.listFiles({ pathname -> Pattern.matches("cpu[0-9]", pathname.name) })
+        dir.listFiles { pathname -> Pattern.matches("cpu[0-9]", pathname.name) }
         return files.size
     }
 
     /**
      * 获取Android设备物理唯一标识符
      *
-     * @return
+     * 当Serial值获取不到（为unknown）时，将使用AndroidId来生成UUID，此时若是系统重置或是刷机，
+     * 再调用此方法获取到的唯一标识符将会变化
      */
+    @SuppressLint("HardwareIds")
     @JvmStatic
-    fun getPsuedoUniqueID(): String {
-        var devIDShort = "35" + Build.BOARD.length % 10 + Build.BRAND.length % 10
-        devIDShort +=
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    Build.SUPPORTED_ABIS[0].length % 10
-                } else {
-                    Build.CPU_ABI.length % 10
-                }
-        devIDShort += Build.DEVICE.length % 10 + Build.MANUFACTURER.length % 10 + Build.MODEL.length % 10 + Build.PRODUCT.length % 10
-        var serial: String
-        try {
-            serial = Build::class.java.getField("SERIAL").get(null).toString()
-            return UUID(devIDShort.hashCode().toLong(), serial.hashCode().toLong()).toString()
-        } catch (e: Exception) {
-            serial = "ESYDV000"
+    fun getUniqueID(context: Context): String {
+        val serial = Build::class.java.getField("SERIAL")[null].toString()
+        if (!TextUtils.equals("unknown", serial.toLowerCase(Locale.ROOT))) {
+            return UUID.nameUUIDFromBytes(serial.toByteArray()).toString()
         }
-        return UUID(devIDShort.hashCode().toLong(), serial.hashCode().toLong()).toString()
+        val androidId =
+            Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        return UUID.nameUUIDFromBytes(androidId.toByteArray()).toString()
     }
 }
