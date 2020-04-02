@@ -22,6 +22,6 @@ Add the dependency
 
 ```groovy
 dependencies {
-        implementation 'com.github.zeropercenthappy:ZPHAndroidUtils:1.2.7'
+        implementation 'com.github.zeropercenthappy:ZPHAndroidUtils:1.2.9'
 }
 ```
