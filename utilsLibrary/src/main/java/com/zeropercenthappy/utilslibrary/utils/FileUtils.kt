@@ -6,7 +6,6 @@ import java.util.*
 
 object FileUtils {
 
-
     private const val BUFFER_SIZE = 8192
 
     @JvmStatic

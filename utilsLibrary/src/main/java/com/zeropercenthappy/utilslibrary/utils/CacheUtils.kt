@@ -18,13 +18,13 @@ object CacheUtils {
      * context.cacheDir -> /data/user/0/{packageName}/cache
      */
     @JvmStatic
-    fun getCacheDir(context: Context): File? {
+    fun getCacheDir(context: Context): File {
         return context.externalCacheDir ?: context.cacheDir
     }
 
     @JvmStatic
     fun clearCacheDir(context: Context): Boolean {
-        val cacheDir = getCacheDir(context) ?: return false
+        val cacheDir = getCacheDir(context)
         return FileUtils.deleteFile(cacheDir)
     }
 
@@ -39,7 +39,7 @@ object CacheUtils {
      */
     @JvmStatic
     fun createCacheFile(context: Context, fileName: String, createFile: Boolean): File? {
-        val dir = getCacheDir(context) ?: return null
+        val dir = getCacheDir(context)
         val cacheFilePath = dir.path + File.separator + fileName
         val cacheFile = File(cacheFilePath)
         try {
@@ -63,13 +63,13 @@ object CacheUtils {
      * @return
      */
     @JvmStatic
-    fun createFormatedCacheFile(
+    fun createFormatCacheFile(
         context: Context,
         fileExtension: String,
         createFile: Boolean
     ): File? {
         val simpleDateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.US)
-        val cacheDir = getCacheDir(context) ?: return null
+        val cacheDir = getCacheDir(context)
         val formattedExtension =
             if (fileExtension.startsWith(".")) fileExtension else ".$fileExtension"
         val cacheFilePath =
