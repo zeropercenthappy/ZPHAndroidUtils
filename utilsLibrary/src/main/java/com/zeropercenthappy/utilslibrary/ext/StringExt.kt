@@ -1,48 +1,48 @@
 package com.zeropercenthappy.utilslibrary.ext
 
-fun String.toByteSafely(defaultValue: Byte = 0): Byte {
+fun String?.toByteSafely(defaultValue: Byte = 0): Byte {
     return try {
-        this.toByte()
+        this?.toByte() ?: defaultValue
     } catch (e: Exception) {
         defaultValue
     }
 }
 
-fun String.toShortSafely(defaultValue: Short = 0): Short {
+fun String?.toShortSafely(defaultValue: Short = 0): Short {
     return try {
-        this.toShort()
+        this?.toShort() ?: defaultValue
     } catch (e: Exception) {
         defaultValue
     }
 }
 
-fun String.toIntSafely(defaultValue: Int = 0): Int {
+fun String?.toIntSafely(defaultValue: Int = 0): Int {
     return try {
-        this.toInt()
+        this?.toInt() ?: defaultValue
     } catch (e: Exception) {
         defaultValue
     }
 }
 
-fun String.toLongSafely(defaultValue: Long = 0L): Long {
+fun String?.toLongSafely(defaultValue: Long = 0L): Long {
     return try {
-        this.toLong()
+        this?.toLong() ?: defaultValue
     } catch (e: Exception) {
         defaultValue
     }
 }
 
-fun String.toFloatSafely(defaultValue: Float = 0f): Float {
+fun String?.toFloatSafely(defaultValue: Float = 0f): Float {
     return try {
-        this.toFloat()
+        this?.toFloat() ?: defaultValue
     } catch (e: Exception) {
         defaultValue
     }
 }
 
-fun String.toDoubleSafely(defaultValue: Double = 0.0): Double {
+fun String?.toDoubleSafely(defaultValue: Double = 0.0): Double {
     return try {
-        this.toDouble()
+        this?.toDouble() ?: defaultValue
     } catch (e: Exception) {
         defaultValue
     }
