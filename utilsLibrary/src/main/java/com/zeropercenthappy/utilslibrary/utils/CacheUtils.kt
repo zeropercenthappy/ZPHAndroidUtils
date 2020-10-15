@@ -115,7 +115,7 @@ object CacheUtils {
     /**
      * @param context
      *
-     * @param dirName       缓存存放的子目录
+     * @param subDirName       缓存存放的子目录
      *
      * @param fileExtension 想要保存的缓存文件后缀名
      *
@@ -126,13 +126,13 @@ object CacheUtils {
     @JvmStatic
     fun createFormatCacheFile(
             context: Context,
-            dirName: String,
+            subDirName: String,
             fileExtension: String,
             createFile: Boolean
     ): File? {
         return try {
             val simpleDateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.US)
-            val dir = getSubCacheDir(context, dirName)
+            val dir = getSubCacheDir(context, subDirName)
             val formattedExtension = if (fileExtension.startsWith(".")) fileExtension else ".$fileExtension"
             val cacheFile = File(dir, simpleDateFormat.format(System.currentTimeMillis()) + formattedExtension)
             if (createFile && !cacheFile.exists()) {
