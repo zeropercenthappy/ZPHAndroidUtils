@@ -2,7 +2,6 @@ package com.zeropercenthappy.utilslibrary.utils
 
 import android.content.Context
 import java.io.File
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,10 +21,32 @@ object CacheUtils {
         return context.externalCacheDir ?: context.cacheDir
     }
 
+    /**
+     * 获取缓存文件夹下的子文件夹
+     */
+    @JvmStatic
+    fun getSubCacheDir(context: Context, subDirName: String): File {
+        val dir = if (subDirName.isEmpty()) {
+            getCacheDir(context)
+        } else {
+            File(getCacheDir(context), subDirName)
+        }
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+        return dir
+    }
+
     @JvmStatic
     fun clearCacheDir(context: Context): Boolean {
-        val cacheDir = getCacheDir(context)
-        return FileUtils.deleteFile(cacheDir)
+        val dir = getCacheDir(context)
+        return FileUtils.deleteFile(dir)
+    }
+
+    @JvmStatic
+    fun clearSubCacheDir(context: Context, subDirName: String): Boolean {
+        val dir = getSubCacheDir(context, subDirName)
+        return FileUtils.deleteFile(dir)
     }
 
     /**
@@ -38,19 +59,39 @@ object CacheUtils {
      * @return
      */
     @JvmStatic
-    fun createCacheFile(context: Context, fileName: String, createFile: Boolean): File? {
-        val dir = getCacheDir(context)
-        val cacheFilePath = dir.path + File.separator + fileName
-        val cacheFile = File(cacheFilePath)
-        try {
+    fun createCacheFile(context: Context,
+                        fileName: String,
+                        createFile: Boolean): File? {
+        return createCacheFile(context, "", fileName, createFile)
+    }
+
+    /**
+     * @param context
+     *
+     * @param subDirName    缓存存放的子目录
+     *
+     * @param fileName      想要保存的缓存文件名，包括后缀名
+     *
+     * @param createFile    若cacheFile不存在，是否需要自动创建空文件
+     *
+     * @return
+     */
+    @JvmStatic
+    fun createCacheFile(context: Context,
+                        subDirName: String,
+                        fileName: String,
+                        createFile: Boolean): File? {
+        return try {
+            val dir = getSubCacheDir(context, subDirName)
+            val cacheFile = File(dir, fileName)
             if (createFile && !cacheFile.exists()) {
                 cacheFile.createNewFile()
             }
-        } catch (e: IOException) {
+            cacheFile
+        } catch (e: Exception) {
             e.printStackTrace()
-            return null
+            null
         }
-        return cacheFile
     }
 
     /**
@@ -64,25 +105,43 @@ object CacheUtils {
      */
     @JvmStatic
     fun createFormatCacheFile(
-        context: Context,
-        fileExtension: String,
-        createFile: Boolean
+            context: Context,
+            fileExtension: String,
+            createFile: Boolean
     ): File? {
-        val simpleDateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.US)
-        val cacheDir = getCacheDir(context)
-        val formattedExtension =
-            if (fileExtension.startsWith(".")) fileExtension else ".$fileExtension"
-        val cacheFilePath =
-            cacheDir.absolutePath + File.separator + simpleDateFormat.format(System.currentTimeMillis()) + formattedExtension
-        val cacheFile = File(cacheFilePath)
-        try {
+        return createFormatCacheFile(context, "", fileExtension, createFile)
+    }
+
+    /**
+     * @param context
+     *
+     * @param dirName       缓存存放的子目录
+     *
+     * @param fileExtension 想要保存的缓存文件后缀名
+     *
+     * @param createFile    若cacheFile不存在，是否需要自动创建空文件
+     *
+     * @return
+     */
+    @JvmStatic
+    fun createFormatCacheFile(
+            context: Context,
+            dirName: String,
+            fileExtension: String,
+            createFile: Boolean
+    ): File? {
+        return try {
+            val simpleDateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.US)
+            val dir = getSubCacheDir(context, dirName)
+            val formattedExtension = if (fileExtension.startsWith(".")) fileExtension else ".$fileExtension"
+            val cacheFile = File(dir, simpleDateFormat.format(System.currentTimeMillis()) + formattedExtension)
             if (createFile && !cacheFile.exists()) {
                 cacheFile.createNewFile()
             }
-        } catch (e: IOException) {
+            cacheFile
+        } catch (e: Exception) {
             e.printStackTrace()
-            return null
+            null
         }
-        return cacheFile
     }
 }
