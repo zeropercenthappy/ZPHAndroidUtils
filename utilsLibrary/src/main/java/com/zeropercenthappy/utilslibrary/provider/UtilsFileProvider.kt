@@ -1,5 +1,5 @@
 package com.zeropercenthappy.utilslibrary.provider
 
-import android.support.v4.content.FileProvider
+import androidx.core.content.FileProvider
 
 class UtilsFileProvider : FileProvider()

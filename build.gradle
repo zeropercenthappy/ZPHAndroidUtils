@@ -2,16 +2,14 @@
 
 buildscript {
     ext.android_support_version = '28.0.0'
-    ext.kotlin_version = '1.4.10'
+    ext.kotlin_version = '1.5.21'
     ext.anko_version = '0.10.8'
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
@@ -21,11 +19,9 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url "https://jitpack.io" }
         google()
-        jcenter()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
     }
 }
 
