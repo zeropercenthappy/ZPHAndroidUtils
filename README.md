@@ -25,6 +25,6 @@ dependencies {
         // For android compat
         implementation 'com.github.zeropercenthappy:ZPHAndroidUtils:1.3.7'
         // For androidX
-        implementation 'com.github.zeropercenthappy:ZPHAndroidUtils:1.3.8'
+        implementation 'com.github.zeropercenthappy:ZPHAndroidUtils:1.4.0'
 }
 ```
