@@ -1,17 +1,15 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
 group = 'com.github.zeropercenthappy'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 29
-        versionCode 140
-        versionName "1.4.0"
+        targetSdkVersion 31
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -36,7 +34,17 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation "androidx.core:core-ktx:1.6.0"
+    implementation "androidx.core:core-ktx:1.7.0"
+}
+
+project.afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+            }
+        }
+    }
 }
 
 task sourcesJar(type: Jar) {
